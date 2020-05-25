@@ -1,6 +1,7 @@
 package src
 
 import (
+	"errors"
 	"github.com/pablote/mock-server/src/providers"
 	"strconv"
 	"strings"
@@ -48,6 +49,10 @@ func (s *MockedResponse) SetStatus(statusInput []string) error {
 }
 
 func (s *MockedResponse) SetBody(bodyInput []string) error {
+	if len(bodyInput[0]) > 1024 {
+		return errors.New("body is too large")
+	}
+
 	s.Body = providers.FixedStringProvider{Value: bodyInput[0]}
 	return nil
 }
