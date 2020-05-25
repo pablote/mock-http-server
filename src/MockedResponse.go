@@ -3,6 +3,7 @@ package src
 import (
 	"github.com/pablote/mock-server/src/providers"
 	"strconv"
+	"strings"
 )
 
 type MockedResponse struct {
@@ -10,7 +11,33 @@ type MockedResponse struct {
 }
 
 func (s *MockedResponse) SetStatus(statusInput []string) error {
-	newStatus, err := strconv.ParseInt(statusInput[0], 0, 32)
+	if strings.Count(statusInput[0], ":") == 2 {
+		inputs := strings.Split(statusInput[0], ":")
+
+		probability, err := strconv.Atoi(inputs[0])
+		if err != nil {
+			return err
+		}
+
+		firstStatus, err := strconv.Atoi(inputs[1])
+		if err != nil {
+			return err
+		}
+
+		secondStatus, err := strconv.Atoi(inputs[2])
+		if err != nil {
+			return err
+		}
+
+		s.Status = providers.ProbabilityIntProvider{
+			Probability:  probability,
+			FirstStatus:  firstStatus,
+			SecondStatus: secondStatus,
+		}
+		return nil
+	}
+
+	newStatus, err := strconv.Atoi(statusInput[0])
 	if err != nil {
 		return err
 	}

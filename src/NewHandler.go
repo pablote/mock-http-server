@@ -29,7 +29,8 @@ func NewHandler() func(http.ResponseWriter, *http.Request) {
 			for name, value := range requestUri.Query() {
 				if name == "__status" {
 					if err := mockedResponse.SetStatus(value); err != nil {
-						Send(writer, http.StatusBadRequest, "mock-server: error: invalid port")
+						Send(writer, http.StatusBadRequest, "mock-server: error: invalid status: %v", err)
+						return
 					}
 				}
 			}
