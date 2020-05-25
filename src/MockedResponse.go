@@ -8,6 +8,7 @@ import (
 
 type MockedResponse struct {
 	Status providers.IntProvider
+	Body   providers.StringProvider
 }
 
 func (s *MockedResponse) SetStatus(statusInput []string) error {
@@ -46,8 +47,14 @@ func (s *MockedResponse) SetStatus(statusInput []string) error {
 	return nil
 }
 
+func (s *MockedResponse) SetBody(bodyInput []string) error {
+	s.Body = providers.FixedStringProvider{Value: bodyInput[0]}
+	return nil
+}
+
 func NewDefaultMockedResponse() *MockedResponse {
 	return &MockedResponse{
 		Status: providers.FixedIntProvider{Value: 200},
+		Body:   providers.FixedStringProvider{Value: ""},
 	}
 }

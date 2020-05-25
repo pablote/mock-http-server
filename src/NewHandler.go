@@ -32,6 +32,11 @@ func NewHandler() func(http.ResponseWriter, *http.Request) {
 						Send(writer, http.StatusBadRequest, "mock-server: error: invalid status: %v", err)
 						return
 					}
+				} else if name == "__body" {
+					if err := mockedResponse.SetBody(value); err != nil {
+						Send(writer, http.StatusBadRequest, "mock-server: error: invalid body: %v", err)
+						return
+					}
 				}
 			}
 
@@ -41,7 +46,7 @@ func NewHandler() func(http.ResponseWriter, *http.Request) {
 				mockedResponse = NewDefaultMockedResponse()
 			}
 
-			Send(writer, mockedResponse.Status.Get(), "")
+			Send(writer, mockedResponse.Status.Get(), mockedResponse.Body.Get())
 		}
 	}
 }
