@@ -34,13 +34,13 @@ func NewHandler() func(http.ResponseWriter, *http.Request) {
 				}
 			}
 
-			Send(writer, http.StatusOK, "mock-server: config updated")
+			Send(writer, http.StatusOK, "mock-server: route updated")
 		} else {
-			if found {
-				Send(writer, mockedResponse.Status, "")
-			} else {
-				Send(writer, http.StatusOK, "")
+			if !found {
+				mockedResponse = NewDefaultMockedResponse()
 			}
+
+			Send(writer, mockedResponse.Status.Get(), "")
 		}
 	}
 }

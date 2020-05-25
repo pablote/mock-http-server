@@ -1,11 +1,12 @@
 package src
 
 import (
+	"github.com/pablote/mock-server/src/providers"
 	"strconv"
 )
 
 type MockedResponse struct {
-	Status int
+	Status providers.IntProvider
 }
 
 func (s *MockedResponse) SetStatus(statusInput []string) error {
@@ -14,12 +15,12 @@ func (s *MockedResponse) SetStatus(statusInput []string) error {
 		return err
 	}
 
-	s.Status = int(newStatus)
+	s.Status = providers.FixedIntProvider{Value: int(newStatus)}
 	return nil
 }
 
 func NewDefaultMockedResponse() *MockedResponse {
 	return &MockedResponse{
-		Status:200,
+		Status: providers.FixedIntProvider{Value: 200},
 	}
 }
