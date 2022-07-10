@@ -2,7 +2,7 @@
 
 Simple, fast, runtime configurable HTTP mock server.
 
-Unlike most similar mock servers, you can change what a specific URL returns at runtime. So you can point your application to the same URL, and try different responses in time.
+Unlike most similar mock servers, you can change what a specific URL returns at runtime. So you can point your application to a fixed URL, and try different responses in time.
 
 ### Usage
 
